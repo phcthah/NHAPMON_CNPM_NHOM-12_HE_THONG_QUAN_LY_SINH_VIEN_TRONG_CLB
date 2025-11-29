@@ -1,19 +1,96 @@
-# Khởi tạo quản lý sự kiện
-manager = EventManager()
+import datetime
 
-# Tạo một lịch sinh hoạt cố định hàng tuần
-print(manager.create_event(
-    name="Sinh hoạt CLB định kỳ",
-    date_str="2025-12-10 18:30",  # Thứ Tư tuần này lúc 18:30
-    location="Sân trường"
-))
+class EventManager:
+    """
+    Quản lý việc tạo, đăng ký, và theo dõi các sự kiện sinh hoạt của câu lạc bộ.
+    """
+    def __init__(self):
+        # Lưu trữ sự kiện: {event_id: {'name': str, 'date': datetime_obj, 'location': str, 'registered': set()}}
+        self.events = {}  
+        self.next_event_id = 1
 
-# Tạo một sự kiện lớn
-print(manager.create_event(
-    name="Tuyển thành viên đợt 2",
-    date_str="2025-12-25 09:00",  # Ngày Giáng sinh lúc 9:00
-    location="Hội trường lớn"
-))
+    # YÊU CẦU 1: Tạo lịch sinh hoạt / sự kiện
+    def create_event(self, name, date_str, location):
+        """Tạo một sự kiện mới và gán ID."""
+        try:
+            event_date = datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+        except ValueError:
+            return "Lỗi: Định dạng ngày tháng không hợp lệ. Vui lòng dùng YYYY-MM-DD HH:MM."
 
-# Kiểm tra dữ liệu đã được lưu
-print("\nCác sự kiện đã được lưu:", manager.events)
+        event_id = self.next_event_id
+        self.events[event_id] = {
+            'name': name,
+            'date': event_date,
+            'location': location,
+            'registered': set()
+        }
+        self.next_event_id += 1
+        return f" Sự kiện '{name}' đã được tạo thành công với ID: {event_id}"
+
+    # YÊU CẦU 2: Thành viên đăng ký tham gia
+    def register_member(self, event_id, member_name):
+        """Đăng ký thành viên vào một sự kiện."""
+        if event_id not in self.events:
+            return "Lỗi: Sự kiện không tồn tại."
+
+        event = self.events[event_id]
+        if event['date'] < datetime.datetime.now():
+            return "Lỗi: Không thể đăng ký vì sự kiện đã diễn ra."
+            
+        if member_name in event['registered']:
+            return f"{member_name} đã đăng ký sự kiện '{event['name']}' rồi."
+
+        event['registered'].add(member_name)
+        return f" {member_name} đã đăng ký tham gia sự kiện '{event['name']}' thành công!"
+
+    # YÊU CẦU 3: Thông báo nhắc sự kiện
+    def check_event_reminders(self, reminder_hours=24):
+        """Kiểm tra và trả về danh sách các sự kiện cần nhắc nhở (mặc định trước 24 giờ)."""
+        now = datetime.datetime.now()
+        reminders = []
+        reminder_threshold_end = now + datetime.timedelta(hours=reminder_hours)
+        
+        for event_id, event in self.events.items():
+            # Kiểm tra: Sự kiện chưa diễn ra VÀ nằm trong ngưỡng nhắc nhở
+            if now < event['date'] <= reminder_threshold_end:
+                time_until = event['date'] - now
+                
+                # Tạo thông báo chi tiết
+                members_count = len(event['registered'])
+                
+                reminders.append(f" [ID:{event_id}] {event['name']} ({event['location']}) sẽ diễn ra sau {time_until} ({event['date'].strftime('%H:%M %d/%m')}). Đã đăng ký: {members_count} người.")
+        
+        return reminders if reminders else ["Không có sự kiện nào cần nhắc nhở lúc này."]
+# YÊU CẦU 4: Quản lý danh sách sự kiện
+    def list_events(self, status='upcoming'):
+        """Liệt kê các sự kiện theo trạng thái (all/upcoming/past)."""
+        now = datetime.datetime.now()
+        event_list = []
+
+        for event_id, event in self.events.items():
+            event_status = "Đã qua" if event['date'] < now else "Sắp diễn ra"
+            num_registered = len(event['registered'])
+            
+            # Chỉ hiển thị các sự kiện theo trạng thái được yêu cầu
+            if status == 'all' or (status == 'upcoming' and event_status == 'Sắp diễn ra') or (status == 'past' and event_status == 'Đã qua'):
+                event_list.append(f"[{event_id}] - {event['name']} ({event_status}) - Ngày: {event['date'].strftime('%Y-%m-%d %H:%M')} - Đăng ký: {num_registered}")
+
+        return event_list if event_list else [f"Không tìm thấy sự kiện nào có trạng thái '{status}'."]
+
+# KHỐI TEST CODE VÀ DEMO
+if __name__ == '__main__':
+    manager = EventManager()
+    
+    # Giả lập thời gian hiện tại là 2025-12-01 10:00
+    current_time = datetime.datetime(2025, 12, 1, 10, 0)
+    datetime.datetime.now = lambda: current_time 
+
+    manager.create_event("Hội thảo GitHub", "2025-12-02 15:00", "Phòng A.101") # ID 1
+    manager.create_event("Tiệc cuối năm", "2025-12-30 19:00", "Nhà hàng Z")    # ID 2
+    manager.register_member(1, "Nhung")
+    
+    print("--- 4 CHỨC NĂNG ĐÃ TRIỂN KHAI ---")
+    print("1. Tạo sự kiện: (Đã chạy ở trên)")
+    print(f"2. Đăng ký thành viên: {manager.register_member(2, 'Bảo')}")
+    print(f"3. Thông báo: \n{'\n'.join(manager.check_event_reminders(reminder_hours=30))}")
+    print(f"4. Quản lý danh sách: \n{'\n'.join(manager.list_events(status='upcoming'))}")
