@@ -1,0 +1,19 @@
+# Khởi tạo quản lý sự kiện
+manager = EventManager()
+
+# Tạo một lịch sinh hoạt cố định hàng tuần
+print(manager.create_event(
+    name="Sinh hoạt CLB định kỳ",
+    date_str="2025-12-10 18:30",  # Thứ Tư tuần này lúc 18:30
+    location="Sân trường"
+))
+
+# Tạo một sự kiện lớn
+print(manager.create_event(
+    name="Tuyển thành viên đợt 2",
+    date_str="2025-12-25 09:00",  # Ngày Giáng sinh lúc 9:00
+    location="Hội trường lớn"
+))
+
+# Kiểm tra dữ liệu đã được lưu
+print("\nCác sự kiện đã được lưu:", manager.events)
