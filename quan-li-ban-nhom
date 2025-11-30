@@ -1,0 +1,75 @@
+// Lớp thành viên
+class Member {
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+
+// Lớp Ban/Nhóm
+class Team {
+    constructor(teamId, teamName) {
+        this.teamId = teamId;
+        this.teamName = teamName;
+        this.members = [];
+    }
+
+    addMember(member) {
+        this.members.push(member);
+    }
+
+    removeMember(memberId) {
+        this.members = this.members.filter(m => m.id !== memberId);
+    }
+
+    listMembers() {
+        console.log(`Danh sách thành viên của ${this.teamName}:`);
+        this.members.forEach(m => console.log(`- ${m.id}: ${m.name}`));
+    }
+}
+
+// Bộ điều khiển quản lý danh sách team
+class TeamManager {
+    constructor() {
+        this.teams = [];
+    }
+
+    addTeam(team) {
+        this.teams.push(team);
+    }
+
+    getTeamById(id) {
+        return this.teams.find(t => t.teamId === id);
+    }
+
+    listTeams() {
+        console.log("Danh sách các Ban/Nhóm:");
+        this.teams.forEach(t => console.log(`- ${t.teamId}: ${t.teamName}`));
+    }
+}
+
+// ----- DEMO -----
+const manager = new TeamManager();
+
+// Tạo các nhóm
+const teamDev = new Team(1, "Ban Phát Triển");
+const teamEvent = new Team(2, "Ban Sự Kiện");
+
+// Thêm vào hệ thống
+manager.addTeam(teamDev);
+manager.addTeam(teamEvent);
+
+// Thêm thành viên
+teamDev.addMember(new Member(101, "Nguyễn Văn A"));
+teamDev.addMember(new Member(102, "Trần Thị B"));
+
+teamEvent.addMember(new Member(201, "Phạm Văn C"));
+
+// In ra danh sách
+manager.listTeams();
+teamDev.listMembers();
+teamEvent.listMembers();
+
+// Xóa thành viên
+teamDev.removeMember(101);
+teamDev.listMembers();
