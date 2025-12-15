@@ -1,0 +1,19 @@
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+
+// middleware
+app.use(cors());
+app.use(express.json());
+
+// test route
+app.get("/", (req, res) => {
+  res.send("Backend đang chạy OK");
+});
+
+// start server
+app.listen(3000, () => {
+  console.log("Server chạy tại http://localhost:3000");
+});
+
