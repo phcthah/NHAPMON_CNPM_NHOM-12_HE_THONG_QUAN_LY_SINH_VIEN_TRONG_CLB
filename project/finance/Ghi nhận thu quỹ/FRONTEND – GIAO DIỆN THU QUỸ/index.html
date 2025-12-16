@@ -1,77 +1,40 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Ghi Nhận Thu Quỹ</title>
-<style>
-body { font-family: Arial; padding: 10px; }
-input, button { width: 100%; padding: 8px; margin: 5px 0; }
-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-th, td { border: 1px solid #ccc; padding: 5px; }
-</style>
+    <meta charset="UTF-8">
+    <title>Ghi Nhận Thu Quỹ</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <h2>Ghi Nhận Thu Quỹ</h2>
 
 <form id="form">
-<input id="HoTen" placeholder="Họ tên" required>
-<input id="Ban" placeholder="Ban" required>
-<input id="SoTien" type="number" placeholder="Số tiền" required>
-<input id="LyDo" placeholder="Lý do">
-<input id="ThoiGianNop" type="datetime-local" required>
-<button>Gửi</button>
+    <input id="HoTen" placeholder="Họ tên" required>
+    <input id="Ban" placeholder="Ban" required>
+    <input id="SoTien" type="number" placeholder="Số tiền" required>
+    <input id="LyDo" placeholder="Lý do">
+    <input id="ThoiGianNop" type="datetime-local" required>
+    <button type="submit">Gửi</button>
 </form>
 
 <p id="msg"></p>
 
 <table>
-<thead>
-<tr>
-<th>Họ tên</th><th>Ban</th><th>Số tiền</th><th>Lý do</th><th>Thời gian</th>
-</tr>
-</thead>
-<tbody id="list"></tbody>
+    <thead>
+        <tr>
+            <th>Họ tên</th>
+            <th>Ban</th>
+            <th>Số tiền</th>
+            <th>Lý do</th>
+            <th>Thời gian</th>
+        </tr>
+    </thead>
+    <tbody id="list"></tbody>
 </table>
 
-<script>
-const api = 'http://localhost:3000/api/thu-quy';
-
-form.onsubmit = async e => {
-    e.preventDefault();
-    const data = {
-        HoTen: HoTen.value,
-        Ban: Ban.value,
-        SoTien: SoTien.value,
-        LyDo: LyDo.value,
-        ThoiGianNop: ThoiGianNop.value
-    };
-    const res = await fetch(api, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(data)
-    });
-    const r = await res.json();
-    msg.innerText = r.message;
-    load();
-};
-
-async function load(){
-    const res = await fetch(api);
-    const data = await res.json();
-    list.innerHTML='';
-    data.forEach(i=>{
-        list.innerHTML += `<tr>
-        <td>${i.HoTen}</td>
-        <td>${i.Ban}</td>
-        <td>${i.SoTien}</td>
-        <td>${i.LyDo||''}</td>
-        <td>${i.ThoiGianNop}</td>
-        </tr>`;
-    });
-}
-load();
-</script>
-
+<script src="js/script.js"></script>
 </body>
 </html>
+
+
