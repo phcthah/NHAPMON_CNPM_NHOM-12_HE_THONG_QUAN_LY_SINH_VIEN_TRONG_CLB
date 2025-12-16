@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng ký thành viên sinh viên</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="register-container">
+    <h2>Đăng ký thành viên</h2>
+
+    <form id="registerForm">
+        <div class="form-group">
+            <label>Họ tên</label>
+            <input type="text" id="hoten" required>
+            <small class="error"></small>
+        </div>
+
+        <div class="form-group">
+            <label>MSSV</label>
+            <input type="text" id="mssv" required>
+            <small class="error"></small>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" required>
+            <small class="error"></small>
+        </div>
+
+        <div class="form-group">
+            <label>Số điện thoại</label>
+            <input type="text" id="sdt">
+            <small class="error"></small>
+        </div>
+
+        <div class="form-group">
+            <label>Khoa</label>
+            <input type="text" id="khoa" required>
+        </div>
+
+        <div class="form-group">
+            <label>Ngành</label>
+            <input type="text" id="nganh" required>
+        </div>
+
+        <div class="form-group">
+            <label>Khóa</label>
+            <input type="text" id="khoaHoc" required>
+        </div>
+
+        <div class="form-group">
+            <label>Giới tính</label>
+            <select id="gioiTinh">
+                <option value="">-- Chọn --</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+            </select>
+        </div>
+
+        <button type="submit">Đăng ký</button>
+    </form>
+</div>
+
+<!-- Popup -->
+<div id="popup" class="popup hidden">
+    <div class="popup-content">
+        <p id="popupMessage"></p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
