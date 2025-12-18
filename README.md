@@ -11,7 +11,6 @@ Ngôn ngữ lập trình: Python làm hệ thống và html,css làm giao diện
 Cơ sở dữ liệu: SQLite;
 Quản lí dự án, phân công việc và tổng hợp công việc bằng: Github, Git Bash, Trello.
 
-Hướng dẫn chạy:
 
 Tên thành viên:
 1. Phan Công Thành:
@@ -39,5 +38,8 @@ Cấu trúc ban đầu của project được tạo sẵn. Các hướng dẫn n
 
    username: admin
    password: admin
+
+4. Cài đặt thư viện:
+   pip install Flask>=2.0 Flask-Login>=0.5 Flask-SQLAlchemy>=2.5 Werkzeug>=2.0 PyMySQL>=1.0 Flask-Migrate>=4.0
 
 Các tệp chính: `app.py`, `config.py`, `models/`, `routes/`, `templates/`, `static/`.
