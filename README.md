@@ -6,7 +6,10 @@ Minh bạch: Dữ liệu rõ ràng, truy cập dễ dàng, giúp Ban điều hà
 Hiệu quả: Giảm tải công việc thủ công, tiết kiệm thời gian cho cả Ban quản lý và thành viên.
 Kết nối – Hỗ trợ: Tạo môi trường tương tác, trao đổi thông tin, hỗ trợ thành viên phát triển kỹ năng và gắn kết cộng đồng CLB.
 
-Công nghệ sử dụng:
+Công nghệ lập trình: Visual Studio code;
+Ngôn ngữ lập trình: Python làm hệ thống và html,css làm giao diện;
+Cơ sở dữ liệu: SQLite;
+Quản lí dự án, phân công việc và tổng hợp công việc bằng: Github, Git Bash, Trello.
 
 Hướng dẫn chạy:
 
