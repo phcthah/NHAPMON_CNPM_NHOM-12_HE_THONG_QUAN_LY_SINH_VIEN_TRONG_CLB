@@ -1,0 +1,1 @@
+C:\Users\LENOVO\Documents\Dlinh\.venv\Scripts\python.exe app.py
