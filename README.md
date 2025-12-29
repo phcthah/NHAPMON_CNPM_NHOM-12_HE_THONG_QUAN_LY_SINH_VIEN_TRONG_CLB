@@ -30,7 +30,7 @@ Giới thiệu: Hệ thống Quản lý Sinh viên trong Câu lạc bộ là m�
 # Công nghệ sử dụng
 - Backend: Python, Flask
 - Frontend: HTML, CSS, Bootstrap
-- CSDL: MySQL
+- CSDL: SQLite
 - ORM: Flask-SQLAlchemy
 - Xác thực: Flask-Login
 
