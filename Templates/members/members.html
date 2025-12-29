@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+{% block title %}Quản lý Thành viên{% endblock %}
+
+{% block content %}
+<div class="members-container animated fadeIn">
+
+    <div class="header-action-container">
+        <h2 class="dashboard-title">
+            <i class="fas fa-chart-line mr-2"></i>Tổng quan hệ thống
+        </h2>
+        {% if current_user.is_authenticated and (current_user.la_admin() or current_user.la_bdh()) %}
+        <a href="{{ url_for('member.them_thanh_vien') }}" class="btn-add-member">
+            <i class="fas fa-plus-circle mr-1"></i> Thêm thành viên
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card blue">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-info">
+                <h4>Tổng thành viên</h4>
+                <p>{{ total_members }}</p>
+            </div>
+        </div>
+        <div class="stat-card green">
+            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-info">
+                <h4>Hoạt động</h4>
+                <p>{{ active_members }}</p>
+            </div>
+        </div>
+        <div class="stat-card orange">
+            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+            <div class="stat-info">
+                <h4>Đang chờ duyệt</h4>
+                <p>{{ pending_members }}</p>
+            </div>
+        </div>
+        <div class="stat-card purple">
+            <div class="stat-icon"><i class="fas fa-sitemap"></i></div>
+            <div class="stat-info">
+                <h4>Tổng ban</h4>
+                <p>{{ teams_count }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-card">
+        <div class="card-header-custom">
+            <h3 class="m-0"><i class="fas fa-list-ul mr-2"></i>Danh sách thành viên</h3>
+            
+            <form method="get" class="search-box">
+                <input type="text" name="q" placeholder="Tìm tên thành viên..." value="{{ keyword }}">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th width="5%">#</th>
+                        <th>Họ tên</th>
+                        <th>Ban chuyên môn</th>
+                        <th>Chức vụ</th>
+                        <th>Trạng thái</th>
+                        <th class="text-right">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in members %}
+                    <tr>
+                        <td class="text-muted">{{ loop.index }}</td>
+                        <td><strong>{{ m.ho_ten }}</strong></td>
+                        <td><span class="team-tag">{{ m.team.ten_ban if m.ten_ban else "Chưa phân ban" }}</span></td>
+                        <td>{{ m.position.ten_chuc_vu if m.position else "—" }}</td>
+                        <td>
+                            {% if m.trang_thai == "hoat_dong" %}
+                                <span class="badge badge-active">Hoạt động</span>
+                            {% else %}
+                                <span class="badge badge-inactive">Ngừng hoạt động</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-right">
+                            <a href="{{ url_for('member.chi_tiet_thanh_vien', member_id=m.id) }}" class="btn-action">
+                                <i class="fas fa-eye"></i> Chi tiết
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="no-data">
+                            <img src="https://cdn-icons-png.flaticon.com/512/7486/7486744.png" width="80" alt="no-data">
+                            <p>Không tìm thấy thành viên nào khớp với từ khóa.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

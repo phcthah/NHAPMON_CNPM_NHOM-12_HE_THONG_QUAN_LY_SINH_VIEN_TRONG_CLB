@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Đăng nhập{% endblock %}
+
+{% block page_content %}
+<div class="auth-wrapper animated fadeIn">
+    <div class="auth-card border-0 shadow-lg">
+        <div class="text-center mb-4">
+            <h1 class="h3 font-weight-bold text-dark">Đăng nhập</h1>
+            <p class="text-muted">Nhập thông tin để truy cập hệ thống</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} border-0 shadow-sm mb-4">
+                  <i class="fas fa-exclamation-circle mr-2"></i> {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group mb-3">
+                <label class="small font-weight-bold text-uppercase text-muted">Tài khoản</label>
+                <input type="text" name="identifier" class="form-control form-control-lg border-2" 
+                       placeholder="Email hoặc Số điện thoại" required autofocus
+                       style="border-radius: 10px; font-size: 1rem;">
+            </div>
+
+            <div class="form-group mb-4">
+                <div class="d-flex justify-content-between">
+                    <label class="small font-weight-bold text-uppercase text-muted">Mật khẩu</label>
+                    <input type="password" name="password" id="password" class="form-control form-control-lg border-2" 
+                           placeholder="••••••••" required
+                           style="border-radius: 10px; font-size: 1rem;">
+                </div>
+                <a href="{{ url_for('auth.forgot_password') }}" class="small font-weight-bold text-primary">Quên?</a>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg w-100 mb-3 shadow" 
+                    style="border-radius: 10px; font-weight: 700; height: 55px; background: #007bff;">
+                Vào hệ thống
+            </button>
+        </form>
+
+        <div class="text-center mt-3">
+            <span class="text-muted">Chưa có tài khoản?</span> 
+            <a href="{{ url_for('auth.signup') }}" class="font-weight-bold text-dark">Đăng ký ngay</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Căn giữa tuyệt đối */
+    .auth-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        padding: 20px;
+    }
+
+    /* Thẻ Card bo góc rộng, đổ bóng mềm */
+    .auth-card {
+        width: 100%;
+        max-width: 420px;
+        background: #ffffff;
+        padding: 40px 30px;
+        border-radius: 20px;
+    }
+
+    /* Hiệu ứng khi nhấn vào ô nhập liệu */
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
+        background-color: #fff;
+    }
+
+    /* Alert đẹp hơn */
+    .alert {
+        border-radius: 10px;
+        font-weight: 500;
+    }
+</style>
+{% endblock %}

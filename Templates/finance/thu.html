@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}Thu – Quỹ{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h3>Danh sách khoản thu</h3>
+    <table class="table">
+        <thead>
+            <tr><th>#</th><th>Thành viên</th><th>Số tiền</th><th>Ghi chú</th><th>Ngày</th></tr>
+        </thead>
+        <tbody>
+            {% for t in thu %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ t.member.ho_ten if t.member else '—' }}</td>
+                <td>{{ t.so_tien }}</td>
+                <td>{{ t.ghi_chu }}</td>
+                <td>{{ t.ngay }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" class="text-center text-muted">Không có khoản thu</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

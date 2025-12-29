@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block title %}Hồ sơ của tôi{% endblock %}
+
+{% block content %}
+<div class="finance-container animated fadeIn">
+    <div class="header-action-container mb-4">
+        <h2 class="dashboard-title"><i class="fas fa-id-badge mr-2"></i>Hồ sơ cá nhân</h2>
+        <a href="{{ url_for('user.edit_profile') }}" class="btn-grey text-decoration-none">
+            <i class="fas fa-edit mr-1"></i> Sửa SĐT
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="modern-card text-center py-5 shadow-sm">
+                <div class="avatar-circle mx-auto mb-3" style="width: 100px; height: 100px; background: #e3f2fd; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-user fa-3x text-primary"></i>
+                </div>
+                <h3 class="font-weight-bold">{{ user.member.ho_ten if user.member else 'Chưa duyệt' }}</h3>
+                <span class="badge-status active">{{ user.quyen|upper }}</span>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="modern-card shadow-sm">
+                <h5 class="mb-4 border-bottom pb-2">Thông tin chi tiết</h5>
+                <div class="row mb-3">
+                    <div class="col-4 text-muted">Email:</div>
+                    <div class="col-8 font-weight-bold">{{ user.email }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4 text-muted">Số điện thoại:</div>
+                    <div class="col-8 font-weight-bold">{{ user.so_dien_thoai or 'Chưa có' }}</div>
+                </div>
+                {% if user.member %}
+                <div class="row mb-3">
+                    <div class="col-4 text-muted">Ngày sinh:</div>
+                    <div class="col-8 font-weight-bold">{{ user.member.ngay_sinh.strftime('%d/%m/%Y') }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4 text-muted">Ban:</div>
+                    <div class="col-8 font-weight-bold">{{ user.member.team.ten_ban if user.member.team else 'N/A' }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4 text-muted">Chức vụ:</div>
+                    <div class="col-8 font-weight-bold text-success">{{ user.member.position.ten_chuc_vu if user.member.position else 'Thành viên' }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
