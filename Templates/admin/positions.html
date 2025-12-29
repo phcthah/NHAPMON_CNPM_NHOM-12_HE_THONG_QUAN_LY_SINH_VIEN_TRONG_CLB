@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+{% block title %}Quản lý Chức vụ{% endblock %}
+{% block content %}
+<div class="finance-container animated fadeIn"> <div class="header-action-container mb-4">
+        <h2 class="dashboard-title"><i class="fas fa-user-tag mr-2"></i>Quản lý Chức vụ</h2>
+        <div class="current-balance">
+            <span class="label">Tổng số chức vụ:</span>
+            <span class="value">{{ positions|length }}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="modern-card finance-form-card">
+                <div class="card-header-custom border-0 bg-transparent">
+                    <h4 class="m-0" style="color: #2d3436; font-size: 1.1rem;">
+                        <i class="fas fa-plus-circle mr-2 text-primary"></i>Thêm chức vụ mới
+                    </h4>
+                </div>
+                <div class="card-body p-0 mt-3">
+                    <form method="POST">
+                        <div class="form-group mb-3">
+                            <label class="form-label-bold">Tên chức vụ <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <i class="fas fa-signature"></i>
+                                <input type="text" name="ten_chuc_vu" placeholder="VD: Chủ nhiệm, Thành viên..." required>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="form-label-bold">Mô tả vai trò</label>
+                            <div class="input-group align-items-start py-2">
+                                <i class="fas fa-align-left mt-2"></i>
+                                <textarea name="mo_ta" rows="4" placeholder="Quyền hạn và trách nhiệm..." 
+                                          style="border:none; outline:none; width:100%; padding-left:10px; resize: none;"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-submit-thu w-100 py-3" style="border-radius: 10px;">
+                            <i class="fas fa-save mr-2"></i>Lưu chức vụ
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="modern-card">
+                <div class="card-header-custom border-bottom bg-transparent py-3">
+                    <h4 class="m-0" style="color: #2d3436; font-size: 1.1rem;">
+                        <i class="fas fa-list-ul mr-2 text-primary"></i>Danh sách chức vụ hiện có
+                    </h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th width="10%">ID</th>
+                                <th width="30%">Tên chức vụ</th>
+                                <th width="45%">Mô tả</th>
+                                <th width="15%" class="text-right">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in positions %}
+                            <tr>
+                                <td class="text-muted">#{{ p.id }}</td>
+                                <td><span class="position-tag">{{ p.ten_chuc_vu }}</span></td>
+                                <td class="text-muted small">{{ p.mo_ta or '—' }}</td>
+                                <td class="text-right">
+                                    <div class="action-btns">
+                                        <form method="POST" action="{{ url_for('position.xoa_chuc_vu', id=p.id) }}" 
+                                              onsubmit="return confirm('Xác nhận xóa chức vụ này?')">
+                                            <button type="submit" class="btn-icon delete-btn" title="Xóa">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-5">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/7486/7486744.png" width="60" style="opacity: 0.5;">
+                                    <p class="text-muted mt-3">Chưa có chức vụ nào được tạo.</p>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
