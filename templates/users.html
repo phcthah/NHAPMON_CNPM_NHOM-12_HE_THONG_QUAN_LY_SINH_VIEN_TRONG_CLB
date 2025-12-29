@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block title %}Người dùng{% endblock %}
+{% block content %}
+<h3>Người dùng</h3>
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="post" action="{{ url_for('users.add_user') }}">
+      <div class="row g-2">
+        <div class="col-md-4"><input class="form-control" name="username" placeholder="Tên đăng nhập" required></div>
+        <div class="col-md-4"><input class="form-control" type="password" name="password" placeholder="Mật khẩu" required></div>
+        <div class="col-md-2 d-flex align-items-center">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="is_admin" id="is_admin">
+            <label class="form-check-label" for="is_admin">Admin</label>
+          </div>
+        </div>
+        <div class="col-md-2"><button class="btn btn-success">Tạo</button></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead><tr><th>#</th><th>Username</th><th>Admin</th><th>Hành động</th></tr></thead>
+  <tbody>
+    {% for u in users %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ '✓' if u.is_admin else '' }}</td>
+        <td>
+          <form method="post" action="{{ url_for('users.reset_password', id=u.id) }}" style="display:inline">
+            <div class="input-group input-group-sm" style="width:220px; display:inline">
+              <input class="form-control" type="password" name="new_password" placeholder="Mật khẩu mới">
+              <button class="btn btn-sm btn-primary">Đổi</button>
+            </div>
+          </form>
+          <form method="post" action="{{ url_for('users.delete_user', id=u.id) }}" style="display:inline; margin-left:6px">
+            <button class="btn btn-sm btn-danger" onclick="return confirm('Xóa người dùng?')">Xóa</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

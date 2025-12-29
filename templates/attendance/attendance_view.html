@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block title %}Điểm danh cho {{ date.strftime('%Y-%m-%d') }}{% endblock %}
+{% block content %}
+<h3>Điểm danh: {{ date.strftime('%Y-%m-%d') }}</h3>
+<table class="table table-striped">
+  <thead><tr><th>#</th><th>Tên</th><th>Email</th><th>Có mặt</th></tr></thead>
+  <tbody>
+    {% for m in members %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ m.name }}</td>
+        <td>{{ m.email }}</td>
+        <td>{% if m.id in present_ids %}✓{% endif %}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
