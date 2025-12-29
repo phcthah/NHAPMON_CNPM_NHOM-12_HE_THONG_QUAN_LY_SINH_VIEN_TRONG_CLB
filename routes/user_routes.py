@@ -5,7 +5,6 @@ from models.user import User
 from config import Config
 
 user_bp = Blueprint("user", __name__)
-
 # Kiểm tra quyền Admin hoặc Ban điều hành
 def la_quan_ly():
     return current_user.la_admin() or current_user.la_bdh()
