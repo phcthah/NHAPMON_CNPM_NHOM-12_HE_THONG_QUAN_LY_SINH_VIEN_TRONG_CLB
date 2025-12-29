@@ -1,160 +1,88 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, abort
-from extensions import db
-from models.member import Member, PendingMember
-from models.team import Team
-from flask_login import login_required, current_user
-import re
+# models/user.py
+from extensions import db, login_manager
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+from config import Config
 
-member_bp = Blueprint('members', __name__, template_folder='../templates')
-
-
-@member_bp.route('/')
-@login_required
-def list_members():
-    # show only approved members (Members are created by admin or via approval)
-    members = Member.query.order_by(Member.id.desc()).all()
-    teams = Team.query.all()
-    return render_template('members.html', members=members, teams=teams)
+@login_manager.user_loader
+def tai_nguoi_dung(user_id):
+    return User.query.get(int(user_id))
 
 
-@member_bp.route('/pending')
-@login_required
-def pending_members():
-    if not getattr(current_user, 'is_admin', False):
-        abort(403)
-    pendings = PendingMember.query.order_by(PendingMember.created_at.desc()).all()
-    return render_template('pending_members.html', pendings=pendings)
+class User(UserMixin, db.Model):
+    __tablename__ = "users"
 
+    id = db.Column(db.Integer, primary_key=True)
 
-@member_bp.route('/pending/approve/<int:id>', methods=['POST'])
-@login_required
-def approve_pending(id):
-    if not getattr(current_user, 'is_admin', False):
-        abort(403)
-    p = PendingMember.query.get_or_404(id)
-    m = Member(name=p.name, email=p.email, team_id=p.team_id)
-    db.session.add(m)
-    # ensure delete by query to avoid potential session issues
-    PendingMember.query.filter_by(id=id).delete()
-    db.session.commit()
-    flash('Đã duyệt thành viên', 'success')
-    return redirect(url_for('members.pending_members'))
+    # ===============================
+    # ĐĂNG NHẬP
+    # ===============================
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    so_dien_thoai = db.Column(db.String(20), unique=True, nullable=False)
+    mat_khau = db.Column(db.String(255), nullable=False)
 
+    # ===============================
+    # PHÂN QUYỀN
+    # ===============================
+    quyen = db.Column(
+        db.String(50),
+        default=Config.QUYEN_THANH_VIEN,
+        nullable=False
+    )
 
-@member_bp.route('/pending/delete/<int:id>', methods=['POST'])
-@login_required
-def delete_pending(id):
-    if not getattr(current_user, 'is_admin', False):
-        abort(403)
-    p = PendingMember.query.get_or_404(id)
-    db.session.delete(p)
-    db.session.commit()
-    flash('Đã xóa đăng ký', 'warning')
-    return redirect(url_for('members.pending_members'))
+    da_duyet = db.Column(db.Boolean, default=False)
 
+    # ===============================
+    # QUAN HỆ 1–1 VỚI MEMBER
+    # ===============================
+    member = db.relationship(
+        "Member",
+        back_populates="user",
+        uselist=False
+    )
 
-@member_bp.route('/add', methods=['POST'])
-@login_required
-def add_member():
-    name = (request.form.get('name') or '').strip()
-    email = (request.form.get('email') or '').strip() or None
-    team_id = request.form.get('team_id') or None
+    # ===============================
+    # MẬT KHẨU
+    # ===============================
+    def dat_mat_khau(self, mat_khau):
+        self.mat_khau = generate_password_hash(mat_khau)
 
-    members = Member.query.all()
-    teams = Team.query.all()
-    form = {'name': name, 'email': email, 'team_id': team_id}
-    errors = []
+    def kiem_tra_mat_khau(self, mat_khau):
+        return check_password_hash(self.mat_khau, mat_khau)
 
-    if not name:
-        errors.append('Tên là bắt buộc')
+    # ===============================
+    # KIỂM TRA VAI TRÒ
+    # ===============================
+    def la_admin(self):
+        return self.quyen == Config.QUYEN_ADMIN
 
-    if email and not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
-        errors.append('Email không hợp lệ')
+    def la_bdh(self):
+        return self.quyen == Config.QUYEN_BDH
 
-    if team_id and not Team.query.get(team_id):
-        errors.append('Nhóm không tồn tại')
+    def la_thu_quy(self):
+        return self.quyen == Config.QUYEN_THU_QUY
 
-    if errors:
-        return render_template('members.html', members=members, teams=teams, form=form, errors=errors)
+    def la_thanh_vien(self):
+        return self.quyen == Config.QUYEN_THANH_VIEN
 
-    m = Member(name=name, email=email, team_id=team_id)
-    db.session.add(m)
-    db.session.commit()
-    flash('Thêm thành viên thành công', 'success')
-    return redirect(url_for('members.list_members'))
+    # ===============================
+    # KIỂM TRA QUYỀN
+    # ===============================
+    def co_quyen(self, ma_quyen):
+        if self.la_admin():
+            return True
 
+        from models.permission import Permission
+        quyen_map = Permission.quyen_theo_vai_tro()
+        return ma_quyen in quyen_map.get(self.quyen, [])
 
-@member_bp.route('/delete/<int:id>', methods=['POST'])
-@login_required
-def delete_member(id):
-    m = Member.query.get_or_404(id)
-    db.session.delete(m)
-    db.session.commit()
-    flash('Xóa thành viên', 'warning')
-    return redirect(url_for('members.list_members'))
+    # ===============================
+    # HIỂN THỊ
+    # ===============================
+    def ten_hien_thi(self):
+        if self.member:
+            return self.member.ho_ten
+        return self.email
 
-
-@member_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
-@login_required
-def edit_member(id):
-    m = Member.query.get_or_404(id)
-    if request.method == 'POST':
-        name = (request.form.get('name') or '').strip()
-        email = (request.form.get('email') or '').strip() or None
-        team_id = request.form.get('team_id') or None
-
-        form = {'name': name, 'email': email, 'team_id': team_id}
-        errors = []
-
-        if not name:
-            errors.append('Tên là bắt buộc')
-
-        if email and not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
-            errors.append('Email không hợp lệ')
-
-        if team_id and not Team.query.get(team_id):
-            errors.append('Nhóm không tồn tại')
-
-        if errors:
-            teams = Team.query.all()
-            return render_template('member_edit.html', member=m, teams=teams, form=form, errors=errors)
-
-        m.name = name
-        m.email = email
-        m.team_id = team_id
-        db.session.commit()
-        flash('Cập nhật thành viên', 'success')
-        return redirect(url_for('members.list_members'))
-    teams = Team.query.all()
-    return render_template('member_edit.html', member=m, teams=teams)
-
-
-@member_bp.route('/signup', methods=['GET', 'POST'])
-def signup():
-    teams = Team.query.all()
-    if request.method == 'POST':
-        name = (request.form.get('name') or '').strip()
-        email = (request.form.get('email') or '').strip() or None
-        team_id = request.form.get('team_id') or None
-        message = (request.form.get('message') or '').strip() or None
-
-        form = {'name': name, 'email': email, 'team_id': team_id, 'message': message}
-        errors = []
-
-        if not name:
-            errors.append('Tên là bắt buộc')
-        if email and not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
-            errors.append('Email không hợp lệ')
-        if team_id and not Team.query.get(team_id):
-            errors.append('Nhóm không tồn tại')
-
-        if errors:
-            return render_template('signup.html', teams=teams, form=form, errors=errors)
-
-        p = PendingMember(name=name, email=email, team_id=team_id, message=message)
-        db.session.add(p)
-        db.session.commit()
-        flash('Đăng ký đã được gửi, vui lòng chờ duyệt', 'success')
-        return redirect(url_for('auth.login'))
-    return render_template('signup.html', teams=teams)
-
+    def __repr__(self):
+        return f"<User {self.email} – {self.quyen}>"
