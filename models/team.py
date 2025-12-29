@@ -13,9 +13,7 @@ class Team(db.Model):
 
     # Tên ban (ví dụ: Ban Truyền Thông, Ban Kỹ Thuật)
     ten_ban = db.Column(db.String(150), nullable=False, unique=True)
-
     # Mô tả chức năng của ban
     mo_ta = db.Column(db.Text)
-
     def __repr__(self):
         return f"<Ban {self.ten_ban}>"

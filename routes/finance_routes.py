@@ -9,7 +9,6 @@ from models.notification import Notification
 
 finance_bp = Blueprint("finance", __name__)
 
-
 # =================================================
 # TIỆN ÍCH PHÂN QUYỀN
 # =================================================

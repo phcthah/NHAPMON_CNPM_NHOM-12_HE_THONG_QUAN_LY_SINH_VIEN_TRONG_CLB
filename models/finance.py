@@ -1,7 +1,6 @@
 from extensions import db
 from datetime import date
 
-
 class Finance(db.Model):
     """
     ===============================
