@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="finance-container animated fadeIn">
+    <div class="mb-4">
+        <a href="{{ url_for('team.danh_sach_ban') }}" class="btn-grey text-decoration-none">
+            <i class="fas fa-arrow-left mr-2"></i>Quay lại
+        </a>
+    </div>
+
+    <div class="modern-card mb-4 border-0 shadow-sm overflow-hidden">
+    <div class="p-4" style="background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);">
+        
+        <div class="row align-items-center">
+            
+            <div class="col-sm-8">
+                <h2 class="m-0" style="color: #2d3436; font-weight: 800; letter-spacing: -0.5px;">
+                    Ban: {{ team.ten_ban }}
+                </h2>
+            </div>
+
+            <div class="col-sm-4 text-right d-flex justify-content-end">
+                {% if current_user.la_admin() or current_user.la_bdh() %}
+                    <div class="d-flex align-items-center gap-2"> 
+                        <a href="{{ url_for('team.sua_ban', team_id=team.id) }}" 
+                           class="btn-action edit shadow-sm" 
+                           title="Chỉnh sửa"
+                           style="text-decoration: none;">
+                            <i class="fas fa-edit"></i>
+                        </a>
+
+                        {% if current_user.la_admin() %}
+                        <form method="POST" action="{{ url_for('team.xoa_ban', team_id=team.id) }}" 
+                              onsubmit="return confirm('Xác nhận xóa ban này?')"
+                              class="m-0 ml-2"> 
+                            <button type="submit" class="btn-action delete shadow-sm" title="Xóa ban">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mt-4 team-description-box">
+            <p class="m-0 text-muted">
+                <i class="fas fa-info-circle mr-2 text-primary"></i>
+                {{ team.mo_ta or 'Ban này hiện chưa có mô tả chi tiết về chức năng và nhiệm vụ.' }}
+            </p>
+        </div>
+    </div>
+</div>
+
+    <div class="modern-card">
+        <h4 class="mb-4"><i class="fas fa-users mr-2"></i>Thành viên thuộc ban ({{ members|length }})</h4>
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Họ tên</th>
+                        <th>Chức vụ</th>
+                        <th>Lớp</th>
+                        <th class="text-right">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in members %}
+                    <tr>
+                        <td><strong>{{ m.ho_ten }}</strong></td>
+                        <td><span class="badge-status active">{{ m.ten_chuc_vu() }}</span></td>
+                        <td class="text-muted">{{ m.lop }}</td>
+                        <td class="text-right">
+                            <a href="{{ url_for('member.chi_tiet_thanh_vien', member_id=m.id) }}" class="btn-icon upload-btn">
+                                <i class="fas fa-user"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="4" class="text-center py-4 text-muted">Chưa có thành viên nào trong ban này.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
