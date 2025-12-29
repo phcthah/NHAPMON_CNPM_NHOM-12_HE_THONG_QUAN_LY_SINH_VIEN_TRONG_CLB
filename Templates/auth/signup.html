@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>📝 Đăng ký thành viên</h2>
+
+        <form method="POST">
+            <div class="form-group">
+                <label>Họ và tên</label>
+                <input type="text" name="ho_ten" required>
+            </div>
+
+            <div class="form-group">
+                <label>Ngày sinh</label>
+                <input type="date" name="ngay_sinh" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Số điện thoại</label>
+                <input type="text" name="so_dien_thoai" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mật khẩu</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary full-width">
+                Đăng ký
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <a href="{{ url_for('auth.login') }}">Đã có tài khoản? Đăng nhập</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
