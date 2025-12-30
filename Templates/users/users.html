@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+{% block title %}Hệ thống Tài khoản{% endblock %}
+
+{% block content %}
+<div class="finance-container animated fadeIn">
+    <div class="header-action-container mb-4">
+        <h2 class="dashboard-title"><i class="fas fa-users-cog mr-2"></i>Quản lý Người dùng</h2>
+    </div>
+
+    <div class="modern-card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="custom-table w-100">
+                <thead>
+                    <tr>
+                        <th width="30%">Tài khoản / Hồ sơ</th>
+                        <th width="20%">Liên hệ</th>
+                        <th width="20%">Vai trò</th>
+                        <th width="15%">Trạng thái</th>
+                        <th width="15%" class="text-right">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for u in users %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-circle-sm mr-2" style="background:#f0f2f5; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                                    <i class="fas fa-user text-muted small"></i>
+                                </div>
+                                <div>
+                                    <div class="font-weight-bold" style="color: #2d3436;">
+                                        {{ u.member.ho_ten if u.member else 'Chưa cập nhật họ tên' }}
+                                    </div>
+                                    <small class="text-muted">{{ u.email }}</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="text-muted small">
+                                <i class="fas fa-phone-alt mr-1"></i>{{ u.so_dien_thoai or 'Chưa có SĐT' }}
+                            </div>
+                        </td>
+
+                        <td>
+                            <form action="{{ url_for('user.set_role', user_id=u.id) }}" method="POST" class="m-0">
+                                <select name="role" onchange="this.form.submit()" class="form-control form-control-sm border-0 bg-light shadow-none" 
+                                    {% if u.id == current_user.id or not current_user.la_admin() %}disabled{% endif %}>
+                                    <option value="ADMIN" {% if u.quyen == 'ADMIN' %}selected{% endif %}>Admin</option>
+                                    <option value="BDH" {% if u.quyen == 'BDH' %}selected{% endif %}>BĐH</option>
+                                    <option value="THU_QUY" {% if u.quyen == 'THU_QUY' %}selected{% endif %}>Thủ quỹ</option>
+                                    <option value="THANH_VIEN" {% if u.quyen == 'THANH_VIEN' %}selected{% endif %}>Thành viên</option>
+                                </select>
+                            </form>
+                        </td>
+
+                        <td>
+                            {% if u.da_duyet %}
+                                <span class="badge-status active"><i class="fas fa-check-circle mr-1"></i>Đã duyệt</span>
+                            {% else %}
+                                <span class="badge-status warning"><i class="fas fa-clock mr-1"></i>Chờ duyệt</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-right">
+                            <div class="d-flex justify-content-end gap-2">
+                                {% if not u.da_duyet %}
+                                <form action="{{ url_for('user.approve_user', user_id=u.id) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn-action edit shadow-sm" title="Duyệt tài khoản">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                                {% endif %}
+
+                                {% if current_user.la_admin() and u.id != current_user.id %}
+                                <form action="{{ url_for('user.xoa_user', user_id=u.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Xác nhận xóa tài khoản này?')">
+                                    <button type="submit" class="btn-icon delete-btn" title="Xóa người dùng">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

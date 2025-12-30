@@ -1,0 +1,1221 @@
+/* ===============================
+   FONT + RESET
+================================ */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background-color: #f6f8fc;
+    color: #333;
+    margin: 0;
+}
+
+/* ===============================
+   LAYOUT
+================================ */
+.app-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===============================
+   SIDEBAR
+================================ */
+.sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, #cfe2ff, #f0e7ff);
+    padding: 20px;
+    position: relative;
+}
+
+/* Sidebar footer pinned to bottom */
+.sidebar-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+}
+
+.sidebar-footer .logout-sidebar {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    text-align: center;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #e6ecff;
+}
+
+.sidebar-footer .logout-sidebar:hover {
+    background: #f2f6ff;
+}
+
+.sidebar .logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+    width: 70px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 12px;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    background-color: #ffffff;
+}
+
+/* ===============================
+   MAIN CONTENT
+================================ */
+.main-content {
+    flex: 1;
+    padding: 25px 35px;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.header {
+    background-color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header .user-info {
+    font-weight: 500;
+}
+
+/* ===============================
+   Member
+================================ */
+
+/* Container & General */
+.members-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.dashboard-title {
+    font-weight: 700;
+    color: #2d3436;
+    font-size: 1.5rem;
+}
+
+/* Container chung cho các thẻ */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 10px 0;
+}
+
+/* Style chính cho Stat Card */
+.stat-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+/* Hiệu ứng khi di chuột vào card */
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    border-color: #e0e0e0;
+}
+
+/* Phần Icon bên trái */
+.stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-right: 18px;
+    flex-shrink: 0;
+    /* Không cho icon bị co lại */
+}
+
+/* Phần thông tin chữ bên phải */
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-info h4 {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #8c8c8c;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-info p {
+    margin: 4px 0 0 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #262626;
+    line-height: 1.2;
+}
+
+/* Bảng màu Pastel cho từng loại Card */
+.blue .stat-icon {
+    background-color: #e6f7ff;
+    color: #1890ff;
+}
+
+.green .stat-icon {
+    background-color: #f6ffed;
+    color: #52c41a;
+}
+
+.orange .stat-icon {
+    background-color: #fff7e6;
+    color: #fa8c16;
+}
+
+.purple .stat-icon {
+    background-color: #f9f0ff;
+    color: #722ed1;
+}
+
+/* Trang trí thêm: đường kẻ màu mỏng ở dưới đáy (tùy chọn) */
+.stat-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    opacity: 0.6;
+}
+
+.blue::after {
+    background: #1890ff;
+}
+
+.green::after {
+    background: #52c41a;
+}
+
+.orange::after {
+    background: #fa8c16;
+}
+
+.purple::after {
+    background: #722ed1;
+}
+
+.green .stat-icon {
+    background: #e8f5e9;
+    color: #43a047;
+}
+
+.orange .stat-icon {
+    background: #fff3e0;
+    color: #fb8c00;
+}
+
+.purple .stat-icon {
+    background: #f3e5f5;
+    color: #8e24aa;
+}
+
+/* Main Table Card */
+.main-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.card-header-custom {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Search Box */
+.search-box {
+    display: flex;
+    background: #f1f2f6;
+    border-radius: 25px;
+    padding: 5px 15px;
+    border: 1px solid #ddd;
+}
+
+.search-box input {
+    border: none;
+    background: transparent;
+    padding: 8px;
+    outline: none;
+    width: 200px;
+}
+
+.search-box button {
+    border: none;
+    background: transparent;
+    color: #1e88e5;
+    cursor: pointer;
+}
+
+/* Custom Table */
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table th {
+    background: #fdfdfd;
+    padding: 15px;
+    text-align: left;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #b2bec3;
+    border-bottom: 1px solid #eee;
+}
+
+.custom-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f1f1;
+    vertical-align: middle;
+}
+
+.custom-table tr:hover {
+    background-color: #fcfdff;
+}
+
+.team-tag {
+    background: #f0f2f5;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #4b6584;
+}
+
+/* Badges */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-active {
+    background: #c6f6d5;
+    color: #22543d;
+}
+
+.badge-inactive {
+    background: #fed7d7;
+    color: #822727;
+}
+
+/* Action Button */
+.btn-action {
+    text-decoration: none;
+    color: #3498db;
+    border: 1px solid #3498db;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.btn-action:hover {
+    background: #3498db;
+    color: #fff;
+}
+
+.no-data {
+    padding: 50px !important;
+    text-align: center;
+}
+
+/* Container bọc bên ngoài để quản lý hàng */
+.header-action-container {
+    display: flex;
+    justify-content: space-between;
+    /* Đẩy tiêu đề sang trái, nút sang phải */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    margin-bottom: 25px;
+    /* Khoảng cách với các thẻ thống kê bên dưới */
+    width: 100%;
+}
+
+/* Định dạng nút thêm thành viên */
+.btn-add-member {
+    background-color: #007bff;
+    /* Màu xanh chủ đạo */
+    color: white !important;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+    white-space: nowrap;
+    /* Không cho chữ bị nhảy dòng */
+}
+
+.btn-add-member:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    /* Hiệu ứng nổi lên khi di chuột */
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Đảm bảo tiêu đề không chiếm hết chỗ */
+.dashboard-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+
+/* ===============================
+   member_edit
+================================ */
+/* Container */
+.member-edit-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* Card Form */
+.modern-form-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #edf2f7;
+}
+
+/* Section Styling */
+.form-section {
+    padding-bottom: 20px;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #4a5568;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f7fafc;
+}
+
+/* Inputs & Labels */
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #718096;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border: 2px solid #edf2f7;
+    border-radius: 8px;
+    padding: 12px 15px;
+    height: auto;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    outline: none;
+}
+
+/* Buttons */
+.btn-save-member {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white !important;
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-save-member:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-light-cancel {
+    background-color: #f7fafc;
+    color: #718096 !important;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-light-cancel:hover {
+    background-color: #edf2f7;
+    color: #2d3748 !important;
+}
+
+/* Responsive row */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.form-group {
+    padding: 0 10px;
+    margin-bottom: 20px;
+}
+
+/* ===============================
+   member_detail
+================================ */
+/* Container chung */
+.member-detail-container {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 0 15px;
+}
+
+/* Thẻ hồ sơ */
+.profile-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+}
+
+/* Header hồ sơ */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.profile-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #f0f2f5;
+    object-fit: cover;
+}
+
+.profile-main-info h2 {
+    margin: 0;
+    font-weight: 800;
+    color: #2d3436;
+}
+
+.profile-subtitle {
+    color: #636e72;
+    font-size: 1.1rem;
+}
+
+/* Trạng thái Badge */
+.badge-status {
+    font-size: 0.85rem;
+    padding: 5px 15px;
+    border-radius: 30px;
+    font-weight: 600;
+}
+
+.badge-status.active {
+    background: #e6fffa;
+    color: #319795;
+}
+
+.badge-status.inactive {
+    background: #fff5f5;
+    color: #e53e3e;
+}
+
+/* Body & Sections */
+.section-label {
+    font-size: 1rem;
+    color: #1e88e5;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.info-item label {
+    display: block;
+    color: #b2bec3;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.info-item p {
+    font-size: 1.05rem;
+    color: #2d3436;
+    font-weight: 500;
+    margin: 0;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 30px 0;
+}
+
+/* Nút bấm */
+.profile-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+
+.btn-edit-profile {
+    background: #1e88e5;
+    color: white !important;
+    padding: 12px 25px;
+    border-radius: 10px;
+    text-decoration: none !important;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-edit-profile:hover {
+    background: #1565c0;
+    box-shadow: 0 5px 15px rgba(30, 136, 229, 0.4);
+}
+
+.btn-grey-detail {
+    background-color: #e2e8f0 !important;
+    /* Màu xám trung tính */
+    color: #4a5568 !important;
+    /* Màu chữ xám đậm */
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center;
+    border: 1px solid #cbd5e0 !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-grey-detail:hover {
+    background-color: #cbd5e0 !important;
+    /* Đậm hơn khi di chuột */
+    color: #2d3748 !important;
+    transform: translateX(-3px);
+    /* Hiệu ứng trượt nhẹ sang trái */
+}
+
+
+/* ===============================
+   attendance
+================================ */
+/* Header & Date Picker */
+.header-action-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.date-picker-box {
+    display: flex;
+    background: #fff;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #ddd;
+}
+
+.form-date-input {
+    border: none;
+    padding: 8px 15px;
+    outline: none;
+    color: #4a5568;
+    font-weight: 600;
+}
+
+.btn-view {
+    background: #4a5568;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-view:hover {
+    background: #2d3748;
+}
+
+/* Status Badges */
+.badge-present {
+    background: #c6f6d5;
+    color: #22543d;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-absent {
+    background: #fed7d7;
+    color: #822727;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Toggle Buttons */
+.btn-toggle-on {
+    background: #ebf8ff;
+    color: #3182ce;
+    border: 1px solid #3182ce;
+    padding: 5px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-toggle-on:hover {
+    background: #3182ce;
+    color: white;
+}
+
+.btn-toggle-off {
+    background: #fff5f5;
+    color: #e53e3e;
+    border: 1px solid #e53e3e;
+    padding: 5px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-toggle-off:hover {
+    background: #e53e3e;
+    color: white;
+}
+
+/* Link thành viên */
+.member-link {
+    text-decoration: none;
+    color: #2d3436;
+    transition: 0.2s;
+}
+
+.member-link:hover {
+    color: #1e88e5;
+}
+
+/* Red Stat Card (for Absent) */
+.red .stat-icon {
+    background: #fff5f5;
+    color: #e53e3e;
+}
+
+
+/* ===============================
+   finance
+================================ */
+/* Balance Header */
+.current-balance {
+    background: #2d3436;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.current-balance .label {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.current-balance .value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #00d2d3;
+}
+
+/* Tabs Modern */
+.finance-tabs-wrapper {
+    border-bottom: 2px solid #eee;
+    margin-bottom: 25px;
+}
+
+.finance-tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.tab-btn {
+    padding: 12px 25px;
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    color: #636e72;
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    color: #1e88e5;
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #1e88e5;
+}
+
+/* Inline Form */
+.finance-form-card {
+    background: #f8f9fa !important;
+    border: 1px dashed #cbd5e0 !important;
+}
+
+.inline-form {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.input-group {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.input-group input {
+    border: none;
+    padding: 10px;
+    outline: none;
+    width: 100%;
+}
+
+.input-group i {
+    color: #b2bec3;
+}
+
+.btn-submit-thu {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit-chi {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Table Action Buttons */
+.action-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.btn-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.confirm-btn {
+    background: #e6fffa;
+    color: #38b2ac;
+}
+
+.delete-btn {
+    background: #fff5f5;
+    color: #f56565;
+}
+
+.upload-btn {
+    background: #ebf8ff;
+    color: #4299e1;
+}
+
+.btn-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Tags */
+.user-tag {
+    background: #edf2f7;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+}
+
+/* Nút icon chung */
+.btn-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+/* Nút Xác nhận (Màu xanh lá) */
+.confirm-btn {
+    background-color: #dcfce7 !important;
+    /* Xanh lá nhạt */
+    color: #15803d !important;
+    /* Icon xanh đậm */
+}
+
+.confirm-btn:hover {
+    background-color: #16a34a !important;
+    /* Đậm lên khi hover */
+    color: white !important;
+    transform: scale(1.1);
+}
+
+/* Nút Xóa (Màu đỏ) */
+.delete-btn {
+    background-color: #fee2e2 !important;
+    /* Đỏ nhạt */
+    color: #b91c1c !important;
+}
+
+.delete-btn:hover {
+    background-color: #dc2626 !important;
+    color: white !important;
+    transform: scale(1.1);
+}
+
+/* Nút Camera/Upload (Màu xanh dương) */
+.upload-btn {
+    background-color: #e0f2fe !important;
+    color: #0369a1 !important;
+}
+
+.upload-btn:hover {
+    background-color: #0284c7 !important;
+    color: white !important;
+}
+
+/* Container chứa các nút hành động trong bảng */
+.action-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Base style cho nút icon */
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.9rem;
+}
+
+/* Nút xác nhận (Xanh lá Pastel) */
+.confirm-btn {
+    background-color: #dcfce7 !important;
+    /* Nền xanh nhạt */
+    color: #15803d !important;
+    /* Icon xanh đậm */
+}
+
+.confirm-btn:hover {
+    background-color: #22c55e !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+/* Nút xóa (Đỏ Pastel) */
+.delete-btn {
+    background-color: #fee2e2 !important;
+    /* Nền đỏ nhạt */
+    color: #b91c1c !important;
+    /* Icon đỏ đậm */
+}
+
+.delete-btn:hover {
+    background-color: #ef4444 !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Nút máy ảnh/upload (Xanh dương Pastel) */
+.upload-btn {
+    background-color: #e0f2fe !important;
+    color: #0369a1 !important;
+    cursor: pointer;
+}
+
+.upload-btn:hover {
+    background-color: #3b82f6 !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Mặc định ẩn tất cả nội dung tab */
+.tab-content {
+    display: none;
+}
+
+/* Chỉ hiển thị tab có class active */
+.tab-content.active {
+    display: block !important;
+}
+
+/* ===============================
+   notifications
+================================ */
+/* Container & List */
+.notification-list-wrapper {
+    background: #fff;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #f1f2f6;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.notification-item:hover {
+    background-color: #f8fbff;
+}
+
+/* Status Dot (Chấm trạng thái chưa đọc) */
+.ni-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: transparent;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.is-unread .ni-status-dot {
+    background-color: #3498db;
+    /* Chấm xanh cho thông báo chưa đọc */
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+}
+
+.is-unread {
+    background-color: #f0f7ff;
+    /* Nền nhạt cho thông báo chưa đọc */
+}
+
+/* Content */
+.ni-content {
+    flex-grow: 1;
+}
+
+.ni-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.ni-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #2d3436;
+}
+
+.ni-time {
+    font-size: 0.8rem;
+    color: #a4b0be;
+}
+
+.ni-body {
+    margin: 0;
+    color: #747d8c;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Actions */
+.ni-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+/* Nút Đã đọc nhanh (Tròn) */
+.btn-read-action {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 1px solid #3498db;
+    background: white;
+    color: #3498db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-read-action:hover {
+    background: #3498db;
+    color: white;
+}
+
+/* Badge trạng thái đã đọc */
+.badge-read-status {
+    font-size: 0.8rem;
+    color: #2ed573;
+    font-weight: 600;
+    padding: 5px 10px;
+}
+
+/* Nút icon view (Cho Admin) */
+.btn-icon-view {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    background: #f1f2f6;
+    color: #57606f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    transition: 0.3s;
+}
+
+.btn-icon-view:hover {
+    background: #dfe4ea;
+    color: #2f3542;
+}
+
+/* positions */
+.btn-action {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    border: none;
+}
+
+.btn-action.edit {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.btn-action.delete {
+    background: #ffebee;
+    color: #d32f2f;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+/* Nếu bootstrap của bạn cũ, hãy thêm dòng này */

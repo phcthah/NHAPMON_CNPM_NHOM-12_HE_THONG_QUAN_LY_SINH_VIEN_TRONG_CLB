@@ -1,0 +1,37 @@
+/* ===============================
+   ADMIN TABLE
+================================ */
+.admin-table th {
+    background: #eef1ff;
+    font-weight: 600;
+}
+
+.admin-table td {
+    vertical-align: middle;
+}
+
+/* ROLE BADGE */
+.badge-admin {
+    background: #ffd6d6;
+    color: #b71c1c;
+}
+
+.badge-bdh {
+    background: #e3f2fd;
+    color: #0d47a1;
+}
+
+.badge-thuquy {
+    background: #ede7f6;
+    color: #4527a0;
+}
+
+/* ACTION BUTTON */
+.btn-danger-soft {
+    background: #ffe0e0;
+    color: #b71c1c;
+}
+
+.btn-danger-soft:hover {
+    background: #ffcdd2;
+}

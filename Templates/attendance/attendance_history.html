@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block title %}Lịch sử điểm danh{% endblock %}
+
+{% block content %}
+<div class="attendance-history-container">
+
+    <!-- HEADER -->
+    <div class="card attendance-history-header">
+        <div>
+            <h3>📊 Lịch sử điểm danh</h3>
+            <p class="text-muted">
+                Thành viên:
+                <strong>{{ member.ho_ten }}</strong>
+            </p>
+        </div>
+
+        <a href="{{ url_for('attendance.bang_diem_danh') }}"
+           class="btn btn-secondary">
+            ← Quay lại điểm danh
+        </a>
+    </div>
+
+    <!-- BẢNG LỊCH SỬ -->
+    <div class="card attendance-history-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ngày</th>
+                    <th>Trạng thái</th>
+                    <th>Ghi chú</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if records %}
+                    {% for record in records %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+
+                        <td>
+                            {{ record.ngay.strftime("%d/%m/%Y") }}
+                        </td>
+
+                        <td>
+                            {% if record.co_mat %}
+                                <span class="badge badge-present">
+                                    ✔ Có mặt
+                                </span>
+                            {% else %}
+                                <span class="badge badge-absent">
+                                    ✖ Vắng
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if record.ghi_chu %}
+                                {{ record.ghi_chu }}
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">
+                            Chưa có dữ liệu điểm danh
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

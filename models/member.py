@@ -1,6 +1,8 @@
 from datetime import date
 from extensions import db
 from config import Config
+
+
 class Member(db.Model):
     """
     Bảng THÀNH VIÊN
