@@ -26,10 +26,12 @@ Giới thiệu: Hệ thống Quản lý Sinh viên trong Câu lạc bộ là m�
 - Quản lý ban / tiểu ban
 - Quản lý điểm danh sinh hoạt
 - Quản lý thu – chi tài chính CLB
-
+- Quản lý chức vụ
+- Quản lý thông báo
+- Hồ sơ cá nhân
 # Công nghệ sử dụng
-- Backend: Python, Flask
-- Frontend: HTML, CSS, Bootstrap
+- Backend: Python, Flask (Python)
+- Frontend: HTML, CSS, Bootstrap,JavaScript
 - CSDL: SQLite
 - ORM: Flask-SQLAlchemy
 - Xác thực: Flask-Login
